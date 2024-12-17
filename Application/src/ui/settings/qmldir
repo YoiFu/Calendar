@@ -1,0 +1,5 @@
+module settings
+
+Settings 1.0 Settings.qml
+ColorPickerPopup 1.0 ColorPickerPopup.qml
+ColorPicker 1.0 ColorPicker.qml

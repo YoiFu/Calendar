@@ -1,0 +1,8 @@
+module calendar
+
+depends components 1.0
+
+Days 1.0 Days.qml
+MonthSelectionPopup 1.0 MonthSelectionPopup.qml
+Calendar 1.0 Calendar.qml
+TimelineBar 1.0 TimelineBar.qml
