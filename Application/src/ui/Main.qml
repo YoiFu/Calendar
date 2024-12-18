@@ -11,8 +11,8 @@ Window {
 
     readonly property int spacing: 4
 
-    height: calendar.height
-    width: calendar.width + settings.width + spacing
+    height: 500
+    width: 700
 
     visible: true
     title: qsTr("Hello World")
@@ -27,7 +27,7 @@ Window {
 
         anchors {
             right: parent.right
-            top: parent.top
+            verticalCenter: parent.verticalCenter
         }
 
         onOpenSettings: {
@@ -41,8 +41,8 @@ Window {
         visible: false
 
         anchors {
-            left: parent.left
-            top: parent.top
+            right: calendar.left
+            verticalCenter: parent.verticalCenter
         }
     }
 

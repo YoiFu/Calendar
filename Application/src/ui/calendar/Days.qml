@@ -20,7 +20,7 @@ Rectangle {
 		width: root.implicitWidth
 		height: 30
 
-		anchors.horizontalCenter: root.horizontalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
 
 		orientation: ListView.Horizontal
 

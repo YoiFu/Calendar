@@ -20,6 +20,10 @@ qt_add_qml_module(${PROJECT_NAME}
         settings/Settings.qml
         settings/ColorPickerPopup.qml
         settings/ColorPicker.qml
+        settings/ColorAlphaSlider.qml
+        settings/ColorDetails.qml
+        settings/ColorCircle.qml
+        settings/ColorPickerContent.qml
     RESOURCES
         qmldir
         components/qmldir

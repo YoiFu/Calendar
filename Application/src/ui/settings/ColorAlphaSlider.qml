@@ -15,11 +15,14 @@ Rectangle {
         GradientStop { position: 0.0; color: "#000000" }
         GradientStop { position: 1.0; color: root.color }
     }
+    radius: 8
 
     Rectangle {
         id: buttonSlider
 
         anchors.verticalCenter: parent.verticalCenter
+        x: root.width - buttonSlider.width - internal.spacing
+
         height: root.height - internal.spacing
         width: height
         radius: width
@@ -33,10 +36,9 @@ Rectangle {
             id: sliderMouseArea
 
             anchors.fill: parent
-            drag.active: true
-            drag.target: parent
+            drag.target: buttonSlider
             drag.axis: Drag.XAxis
-            drag.minimumX: 0
+            drag.minimumX: internal.spacing
             drag.maximumX: root.width - buttonSlider.width - internal.spacing
         }
     }

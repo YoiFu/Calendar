@@ -9,35 +9,12 @@ Popup {
 
     property int preferredEdge: Qt.LeftEdge
     property Item anchorItem: null
+    readonly property int popUpWidth: content.contentWidth
 
-    Canvas {
-        id: triangle
+    padding: 0
 
-        property list<point> points: {
-            var arr = [
-                {x: root.x, y: root.y},
-                {x: root.x + internal.width, y: root.y + internal.height/2},
-                {x: root.x, y: root.y + internal.height}
-            ];
-
-            return arr;
-        }
-
-        anchors.fill: parent
-
-        onPaint: {
-            var ctx = getContext("2d");
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(triangle.points[0].x, triangle.points[0].y);
-            for (let i = 1; i < points.length; i++) {
-                ctx.lineTo(triangle.points[i].x, triangle.points[i].y);
-            }
-            ctx.closePath();
-
-            ctx.fillStyle = internal.popupColor;
-            ctx.fill();
-        }
+    contentItem: ColorPickerContent {
+        id: content
     }
 
     QtObject {

@@ -14,9 +14,7 @@ Item {
 
     onOpenPopupChanged: function() {
         if (openPopup) {
-            popup.open();
-        } else {
-            popup.close();
+            colorPickerLoader.open();
         }
     }
 
@@ -57,11 +55,18 @@ Item {
         }
     }
 
-    Loader {
+    ColorPickerPopup {
         id: colorPickerLoader
+        // anchors.centerIn: parent
+        anchorItem: root
 
-        sourceComponent: ColorPickerPopup {
-            anchorItem: root
+        x: root.x - popUpWidth
+        y: root.y + internal.outerRadius/2
+
+        onVisibleChanged: function (){
+            if (!visible) {
+                root.openPopup = false;
+            }
         }
     }
 

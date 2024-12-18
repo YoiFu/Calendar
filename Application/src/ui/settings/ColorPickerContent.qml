@@ -8,11 +8,17 @@ import QtQuick.Window
 Item {
     id: root
 
+    readonly property int contentWidth: internal.contentWidth + internal.triWidth
+
+    height: internal.contentHeight
+    width: internal.contentWidth + internal.triWidth
+
     Rectangle {
         id: content
 
-        height: 270
-        width: 200
+        height: internal.contentHeight
+        width: internal.contentWidth
+        radius: 8
 
         color: internal.popupColor
 
@@ -52,11 +58,11 @@ Item {
         id: wrapper
 
 
-        height: internal.height
-        width: internal.width
+        height: internal.triHeight
+        width: internal.triWidth
 
         anchors {
-            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
             left: content.right
         }
 
@@ -65,9 +71,9 @@ Item {
 
             property list<point> points: {
                 var arr = [
-                    {x: wrapper.x, y: wrapper.y},
-                    {x: wrapper.x + internal.width, y: wrapper.y + internal.height/2},
-                    {x: wrapper.x, y: wrapper.y + internal.height}
+                    {x: triangle.x, y: triangle.y},
+                    {x: triangle.x + internal.triWidth, y: triangle.y + internal.triHeight/2},
+                    {x: triangle.x, y: triangle.y + internal.triHeight}
                 ];
 
                 return arr;
@@ -90,11 +96,14 @@ Item {
             }
         }
     }
+
     QtObject {
         id: internal
 
-        readonly property int height: 12
-        readonly property int width: 10
+        readonly property int contentHeight: 270
+        readonly property int contentWidth: 200
+        readonly property int triHeight: 12
+        readonly property int triWidth: 8
         readonly property color popupColor: "#4B5945"
     }
 }

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 
 import TemporalUnit 1.0
 import CPalette 1.0
@@ -43,6 +44,12 @@ Rectangle {
 			fillMode: Image.PreserveAspectFit
 
             source: "../assets/Arrow.svg"
+
+            ColorOverlay {
+                source: arrow
+                anchors.fill: parent
+                color: CPalette.layer1
+            }
 		}
 
 		MouseArea {
