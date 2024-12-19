@@ -6,104 +6,109 @@ import Qt5Compat.GraphicalEffects
 import QtQuick.Window
 
 Item {
-    id: root
+	id: root
 
-    readonly property int contentWidth: internal.contentWidth + internal.triWidth
+	readonly property int contentWidth: internal.contentWidth + internal.triWidth
 
-    height: internal.contentHeight
-    width: internal.contentWidth + internal.triWidth
+	height: internal.contentHeight
+	width: internal.contentWidth + internal.triWidth
 
-    Rectangle {
-        id: content
+	Rectangle {
+		id: content
 
-        height: internal.contentHeight
-        width: internal.contentWidth
-        radius: 8
+		height: internal.contentHeight
+		width: internal.contentWidth
+		radius: 8
 
-        color: internal.popupColor
+		color: internal.popupColor
 
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-        }
+		anchors {
+			verticalCenter: parent.verticalCenter
+			left: parent.left
+		}
 
-        ColumnLayout {
-            id: contentLayout
+		ColumnLayout {
+			id: contentLayout
 
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: parent.top
-                topMargin: 30
-            }
+			anchors {
+				horizontalCenter: parent.horizontalCenter
+				top: parent.top
+				topMargin: 30
+			}
 
-            width: 160
-            spacing: 0
+			width: 160
+			spacing: 0
 
-            ColorCircle {
-                id: colorCircle
+			ColorCircle {
+				id: colorCircle
 
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 120
-                Layout.preferredWidth: 120
-            }
+				Layout.alignment: Qt.AlignHCenter
+				Layout.preferredHeight: 120
+				Layout.preferredWidth: 120
+			}
 
-            ColorAlphaSlider {
-                Layout.fillWidth: true
-                Layout.topMargin: 10
-            }
-        }
-    }
+			ColorAlphaSlider {
+				Layout.fillWidth: true
+				Layout.topMargin: 10
+			}
 
-    Item {
-        id: wrapper
+			ColorDetails {
+				Layout.fillWidth: true
+				Layout.topMargin: 4
+			}
+		}
+	}
+
+	Item {
+		id: wrapper
 
 
-        height: internal.triHeight
-        width: internal.triWidth
+		height: internal.triHeight
+		width: internal.triWidth
 
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: content.right
-        }
+		anchors {
+			verticalCenter: parent.verticalCenter
+			left: content.right
+		}
 
-        Canvas {
-            id: triangle
+		Canvas {
+			id: triangle
 
-            property list<point> points: {
-                var arr = [
-                    {x: triangle.x, y: triangle.y},
-                    {x: triangle.x + internal.triWidth, y: triangle.y + internal.triHeight/2},
-                    {x: triangle.x, y: triangle.y + internal.triHeight}
-                ];
+			property list<point> points: {
+				var arr = [
+							{x: triangle.x, y: triangle.y},
+							{x: triangle.x + internal.triWidth, y: triangle.y + internal.triHeight/2},
+							{x: triangle.x, y: triangle.y + internal.triHeight}
+						];
 
-                return arr;
-            }
+				return arr;
+			}
 
-            anchors.fill: parent
+			anchors.fill: parent
 
-            onPaint: {
-                var ctx = getContext("2d");
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(triangle.points[0].x, triangle.points[0].y);
-                for (let i = 1; i < points.length; i++) {
-                    ctx.lineTo(triangle.points[i].x, triangle.points[i].y);
-                }
-                ctx.closePath();
+			onPaint: {
+				var ctx = getContext("2d");
+				ctx.lineWidth = 1;
+				ctx.beginPath();
+				ctx.moveTo(triangle.points[0].x, triangle.points[0].y);
+				for (let i = 1; i < points.length; i++) {
+					ctx.lineTo(triangle.points[i].x, triangle.points[i].y);
+				}
+				ctx.closePath();
 
-                ctx.fillStyle = internal.popupColor;
-                ctx.fill();
-            }
-        }
-    }
+				ctx.fillStyle = internal.popupColor;
+				ctx.fill();
+			}
+		}
+	}
 
-    QtObject {
-        id: internal
+	QtObject {
+		id: internal
 
-        readonly property int contentHeight: 270
-        readonly property int contentWidth: 200
-        readonly property int triHeight: 12
-        readonly property int triWidth: 8
-        readonly property color popupColor: "#4B5945"
-    }
+		readonly property int contentHeight: 270
+		readonly property int contentWidth: 200
+		readonly property int triHeight: 12
+		readonly property int triWidth: 8
+		readonly property color popupColor: "#4B5945"
+	}
 }

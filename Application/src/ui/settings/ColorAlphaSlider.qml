@@ -8,10 +8,10 @@ import QtQuick.Window
 Rectangle {
     id: root
 
-    height: 14
+	height: 16
 
     gradient: Gradient {
-        orientation: Gradient.Horizontal
+		orientation: Gradient.Horizontal
         GradientStop { position: 0.0; color: "#000000" }
         GradientStop { position: 1.0; color: root.color }
     }

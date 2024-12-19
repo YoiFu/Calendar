@@ -9,8 +9,6 @@ import CPalette 1.0
 Window {
     id: root
 
-    readonly property int spacing: 4
-
     height: 500
     width: 700
 
@@ -42,6 +40,7 @@ Window {
 
         anchors {
             right: calendar.left
+			rightMargin: 4
             verticalCenter: parent.verticalCenter
         }
     }
