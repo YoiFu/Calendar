@@ -27,6 +27,8 @@ Item {
 		property alias valueText: valueText.text
 		readonly property color textColor: "#FFFFFF"
 
+        spacing: 0
+
 		Text {
 			id: symText
 
@@ -64,8 +66,10 @@ Item {
 			RowLayout {
 				anchors {
 					fill: parent
+                    rightMargin: internal.innerSpacing
+                    leftMargin: internal.innerSpacing
 				}
-				spacing: 0
+                spacing: 2
 
 				SymbolWithValue {
 					Layout.fillHeight: true
@@ -104,16 +108,18 @@ Item {
 
 		DetailBlock {
 			Layout.fillHeight: true
-			Layout.preferredWidth: 55
+            Layout.preferredWidth: 50
 
 			RowLayout {
 				anchors {
 					fill: parent
+                    rightMargin: internal.innerSpacing
+                    leftMargin: internal.innerSpacing
 				}
 				spacing: 2
 
 				Rectangle {
-					Layout.fillHeight: true
+                    Layout.preferredHeight: parent.height - internal.innerSpacing * 2
 					Layout.preferredWidth: height
 					radius: 2
 					color: "red"

@@ -56,6 +56,11 @@ Item {
 				Layout.fillWidth: true
 				Layout.topMargin: 4
 			}
+
+			ColorTemplate {
+				Layout.fillWidth: true
+				Layout.topMargin: 8
+			}
 		}
 	}
 
