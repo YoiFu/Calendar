@@ -24,6 +24,7 @@ qt_add_qml_module(${PROJECT_NAME}
         settings/ColorDetails.qml
         settings/ColorCircle.qml
         settings/ColorPickerContent.qml
+        settings/ColorTemplate.qml
     RESOURCES
         qmldir
         components/qmldir
