@@ -8,6 +8,7 @@ import QtQuick.Window
 Item {
 	id: root
 
+	property QtObject paletteModel: null
 	readonly property int contentWidth: internal.contentWidth + internal.triWidth
 
 	height: internal.contentHeight
@@ -33,18 +34,18 @@ Item {
 			anchors {
 				horizontalCenter: parent.horizontalCenter
 				top: parent.top
-				topMargin: 30
+				topMargin: 10
 			}
 
-			width: 160
+			width: 180
 			spacing: 0
 
 			ColorCircle {
 				id: colorCircle
 
 				Layout.alignment: Qt.AlignHCenter
-				Layout.preferredHeight: 120
-				Layout.preferredWidth: 120
+				Layout.preferredHeight: 140
+				Layout.preferredWidth: 140
 			}
 
 			ColorAlphaSlider {
@@ -54,12 +55,21 @@ Item {
 
 			ColorDetails {
 				Layout.fillWidth: true
-				Layout.topMargin: 4
+				Layout.topMargin: 8
 			}
 
 			ColorTemplate {
 				Layout.fillWidth: true
 				Layout.topMargin: 8
+
+				paletteModel: root.paletteModel
+			}
+
+			ColorCustomList {
+				Layout.fillWidth: true
+				Layout.topMargin: 8
+
+				paletteModel: root.paletteModel
 			}
 		}
 	}
@@ -110,8 +120,8 @@ Item {
 	QtObject {
 		id: internal
 
-		readonly property int contentHeight: 270
-		readonly property int contentWidth: 200
+		readonly property int contentHeight: 300
+		readonly property int contentWidth: 220
 		readonly property int triHeight: 12
 		readonly property int triWidth: 8
 		readonly property color popupColor: "#4B5945"

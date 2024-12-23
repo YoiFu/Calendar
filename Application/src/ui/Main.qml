@@ -7,46 +7,46 @@ import TemporalUnit 1.0
 import CPalette 1.0
 
 Window {
-    id: root
+	id: root
 
-    height: 500
-    width: 700
+	height: 500
+	width: 700
 
-    visible: true
-    title: qsTr("Hello World")
+	visible: true
+	title: qsTr("Hello World")
 
-    color: "transparent"
+	color: "transparent"
 
-    flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinMaxButtonsHint
+	flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinMaxButtonsHint
 
-    Calendar {
-        id: calendar
-        temporalObject: TemporalUnit
+	Calendar {
+		id: calendar
+		temporalObject: TemporalUnit
 
-        anchors {
-            right: parent.right
-            verticalCenter: parent.verticalCenter
-        }
+		anchors {
+			right: parent.right
+			verticalCenter: parent.verticalCenter
+		}
 
-        onOpenSettings: {
-            settings.visible = !settings.visible
-        }
-    }
+		onOpenSettings: {
+			settings.visible = !settings.visible
+		}
+	}
 
-    Settings {
-        id: settings
+	Settings {
+		id: settings
 
-        visible: false
+		visible: false
 
-        anchors {
-            right: calendar.left
+		anchors {
+			right: calendar.left
 			rightMargin: 4
-            verticalCenter: parent.verticalCenter
-        }
-    }
+			verticalCenter: parent.verticalCenter
+		}
+	}
 
-    Component.onCompleted: {
-        console.log(calendar.Window.window)
-        console.log(root)
-    }
+	Component.onCompleted: {
+		console.log(calendar.Window.window)
+		console.log(root)
+	}
 }

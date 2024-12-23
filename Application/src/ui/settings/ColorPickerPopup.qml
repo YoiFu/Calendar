@@ -5,40 +5,32 @@ import Qt5Compat.GraphicalEffects
 import QtQuick.Window
 
 Popup {
-    id: root
+	id: root
 
-    property int preferredEdge: Qt.LeftEdge
-    property Item anchorItem: null
-    readonly property int popUpWidth: content.contentWidth
+	property QtObject paletteModel: null
+	property int preferredEdge: Qt.LeftEdge
+	property Item anchorItem: null
+	readonly property int popUpWidth: content.contentWidth
 
-    padding: 0
+	property Item contentComponent: ColorPickerContent {
+		id: content
 
-    contentItem: ColorPickerContent {
-        id: content
-    }
+		paletteModel: root.paletteModel
+	}
 
-    QtObject {
-        id: internal
+	padding: 0
 
-        readonly property int height: 12
-        readonly property int width: 10
-        readonly property color popupColor: "#4B5945"
+	contentItem: contentComponent
 
-        readonly property var windowContentItem: root.anchorItem
-                                                 && root.anchorItem.Window.window ? root.anchorItem.Window.contentItem : null
+	QtObject {
+		id: internal
 
+		readonly property int height: 12
+		readonly property int width: 10
+		readonly property color popupColor: "#4B5945"
 
-        function getWindowMappedAnchorPos() {
-            if (!windowContentItem) {
-                return Qt.point(0, 0);
-            }
-
-            return windowContentItem.mapFromItem(root.anchorItem.parent, root.anchorItem.x, root.anchorItem.y);
-        }
-
-        function updatePositioning() {
-            windowMappedAnchorPos = getWindowMappedAnchorPos();
-            positioning = getPositioning();
-        }
-    }
+		readonly property var windowContentItem: root.anchorItem
+												 && root.anchorItem.Window.window
+												 ? root.anchorItem.Window.contentItem : null
+	}
 }

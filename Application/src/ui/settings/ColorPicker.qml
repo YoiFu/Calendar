@@ -4,78 +4,82 @@ import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
 import QtQuick.Window
 
+import PaletteModel 1.0
+
 Item {
-    id: root
+	id: root
 
-    property bool openPopup: false
+	property bool openPopup: false
 
-    height: internal.outerRadius
-    width: internal.outerRadius
+	height: internal.outerRadius
+	width: internal.outerRadius
 
-    onOpenPopupChanged: function() {
-        if (openPopup) {
-            colorPickerLoader.open();
-        }
-    }
+	onOpenPopupChanged: function() {
+		if (openPopup) {
+			colorPickerLoader.open();
+		}
+	}
 
-    Rectangle {
-        id: outter
+	Rectangle {
+		id: outter
 
-        anchors.fill: parent
+		anchors.fill: parent
 
-        radius: internal.outerRadius
+		radius: internal.outerRadius
 
-        border.width: 1
-        border.color: "#000000"
+		border.width: 1
+		border.color: "#000000"
 
-        color: "transparent"
+		color: "transparent"
 
-        visible: root.openPopup
-    }
+		visible: root.openPopup
+	}
 
-    Rectangle {
-        id: inner
+	Rectangle {
+		id: inner
 
-        anchors.centerIn: parent
+		anchors.centerIn: parent
 
-        height: internal.innerRadius
-        width: internal.innerRadius
+		height: internal.innerRadius
+		width: internal.innerRadius
 
-        radius: internal.innerRadius
+		radius: internal.innerRadius
 
-        color: "red"
+		color: "red"
 
-        MouseArea {
-            id: mouse
+		MouseArea {
+			id: mouse
 
-            anchors.fill: parent
-            onClicked: {
-                root.openPopup = !root.openPopup;
-            }
-        }
-    }
+			anchors.fill: parent
+			onClicked: {
+				root.openPopup = !root.openPopup;
+			}
+		}
+	}
 
-    ColorPickerPopup {
-        id: colorPickerLoader
-        // anchors.centerIn: parent
-        anchorItem: root
+	ColorPickerPopup {
+		id: colorPickerLoader
 
-        x: root.x - popUpWidth
-        y: root.y + internal.outerRadius/2
+		anchorItem: root
 
-        onVisibleChanged: function (){
-            if (!visible) {
-                root.openPopup = false;
-            }
-        }
-    }
+		x: root.x - popUpWidth
+		y: root.y + internal.outerRadius/2
 
-    QtObject {
-        id: internal
+		onVisibleChanged: function (){
+			if (!visible) {
+				root.openPopup = false;
+			}
+		}
 
-        readonly property int outerRadius: 24
-        readonly property int innerRadius: 20
-    }
+		paletteModel: PaletteModel
+	}
+
+	QtObject {
+		id: internal
+
+		readonly property int outerRadius: 24
+		readonly property int innerRadius: 20
+	}
 }
 
 

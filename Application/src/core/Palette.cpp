@@ -9,6 +9,7 @@ const uint32_t g_layer2 = 0x9DAD7F;
 const uint32_t g_layer3 = 0xC7CFB7;
 const uint32_t g_layer4 = 0xF7F7E8;
 const uint32_t g_layer5 = 0x000000;
+const uint32_t g_layer6 = 0xFFFFFF;
 const uint32_t g_layerHover1 = 0xA6C5C8;
 const uint32_t g_layerHover2 = 0xC7C7C7;
 
@@ -73,6 +74,12 @@ QColor Palette::layer4() const
 QColor Palette::layer5() const
 {
 	static auto color = QColor::fromRgb(g_layer5);
+	return color;
+}
+
+QColor Palette::layer6() const
+{
+	static auto color = QColor::fromRgb(g_layer6);
 	return color;
 }
 

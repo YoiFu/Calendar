@@ -8,7 +8,7 @@ import QtQuick.Window
 Item {
 	id: root
 
-	height: 16
+	height: 24
 
 	component Splitter: Rectangle {
 		width: 1
@@ -27,7 +27,7 @@ Item {
 		property alias valueText: valueText.text
 		readonly property color textColor: "#FFFFFF"
 
-        spacing: 0
+		spacing: 0
 
 		Text {
 			id: symText
@@ -35,7 +35,9 @@ Item {
 			Layout.alignment: Qt.AlignVCenter
 
 			verticalAlignment: Text.AlignVCenter
-			font.pixelSize: 10
+			font.pixelSize: 12
+			font.bold: true
+
 			color: textColor
 		}
 
@@ -50,7 +52,8 @@ Item {
 
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignRight
-			font.pixelSize: 9
+			font.pixelSize: 11
+
 			color: textColor
 		}
 	}
@@ -61,15 +64,15 @@ Item {
 		anchors.fill: parent
 		DetailBlock {
 			Layout.fillHeight: true
-			Layout.preferredWidth: 102
+			Layout.preferredWidth: 112
 
 			RowLayout {
 				anchors {
 					fill: parent
-                    rightMargin: internal.innerSpacing
-                    leftMargin: internal.innerSpacing
+					rightMargin: internal.innerSpacing
+					leftMargin: internal.innerSpacing
 				}
-                spacing: 2
+				spacing: 2
 
 				SymbolWithValue {
 					Layout.fillHeight: true
@@ -108,18 +111,18 @@ Item {
 
 		DetailBlock {
 			Layout.fillHeight: true
-            Layout.preferredWidth: 50
+			Layout.preferredWidth: 60
 
 			RowLayout {
 				anchors {
 					fill: parent
-                    rightMargin: internal.innerSpacing
-                    leftMargin: internal.innerSpacing
+					rightMargin: internal.innerSpacing
+					leftMargin: internal.innerSpacing
 				}
 				spacing: 2
 
 				Rectangle {
-                    Layout.preferredHeight: parent.height - internal.innerSpacing * 2
+					Layout.preferredHeight: parent.height - internal.innerSpacing * 2
 					Layout.preferredWidth: height
 					radius: 2
 					color: "red"

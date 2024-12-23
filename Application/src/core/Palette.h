@@ -22,6 +22,7 @@ class Palette : public QObject
 	Q_PROPERTY(QColor layer3 READ layer3 CONSTANT)
 	Q_PROPERTY(QColor layer4 READ layer4 CONSTANT)
 	Q_PROPERTY(QColor layer5 READ layer5 CONSTANT)
+	Q_PROPERTY(QColor layer6 READ layer6 CONSTANT)
 
 	Q_PROPERTY(QColor layerHover1 READ layerHover1 CONSTANT)
 	Q_PROPERTY(QColor layerHover2 READ layerHover2 CONSTANT)
@@ -47,6 +48,7 @@ public:
 	QColor layer3() const;
 	QColor layer4() const;
 	QColor layer5() const;
+	QColor layer6() const;
 
 	QColor layerHover1() const;
 	QColor layerHover2() const;

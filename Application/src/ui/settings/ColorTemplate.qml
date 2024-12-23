@@ -4,47 +4,75 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 
+import CPalette 1.0
+
 GridLayout {
+	id: root
+
+	property QtObject paletteModel: null
+
 	height: internal.templateHeight * 2 + internal.spacing
+
 	flow: GridLayout.LeftToRight
+
 	rows: 2
 	columns: 7
 	rowSpacing: internal.spacing
-	columnSpacing: internal.spacing * 2
+	columnSpacing: internal.spacing
 
 	Repeater {
-		model: 14
-		Rectangle {
-			required property int index
-			color: internal.colorModel[index]
+		model: root.paletteModel ? root.paletteModel.rgbColorModel : 14
+		Item {
+			id: colorCell
 
-			Layout.preferredHeight: internal.templateHeight
-			Layout.preferredWidth: internal.templateHeight
-			radius: width
+			required property string modelData
+
+			Layout.preferredHeight: internal.templateHeight + 4
+			Layout.preferredWidth: internal.templateHeight + 4
+
+			Rectangle {
+				id: outter
+
+				anchors.fill: parent
+
+				radius: width
+
+				border.width: 1
+				border.color: CPalette.layer6
+
+				color: "transparent"
+
+				visible: false
+			}
+
+			Rectangle {
+				id: inner
+
+				anchors.centerIn: parent
+
+				height: internal.templateHeight
+				width: internal.templateHeight
+
+				radius: width
+
+				color: root.paletteModel.rgbColorModel ? modelData : "#FFFFFF"
+
+				MouseArea {
+					id: mouse
+
+					anchors.fill: parent
+					onClicked: {
+						outter.visible = !outter.visible;
+					}
+				}
+			}
 		}
 	}
 
 	QtObject {
 		id: internal
 
-		readonly property int templateHeight: 16
+		readonly property int templateHeight: 18
 		readonly property int spacing: 4
-
-		readonly property color colorModel: [
-			"red",
-			"blue",
-			"green",
-			"yellow",
-			"purple",
-			"violet",
-			"red",
-			"red",
-			"red",
-			"red",
-			"red",
-			"red",
-			"red",
-			"red",
-		]
 	}
 }

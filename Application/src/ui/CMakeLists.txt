@@ -25,6 +25,7 @@ qt_add_qml_module(${PROJECT_NAME}
         settings/ColorCircle.qml
         settings/ColorPickerContent.qml
         settings/ColorTemplate.qml
+        settings/ColorCustomList.qml
     RESOURCES
         qmldir
         components/qmldir
@@ -38,6 +39,7 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/Solar.svg
         assets/Settings.svg
         assets/RGBAColor.png
+        assets/Plus.svg
 )
 
 target_link_libraries(${PROJECT_NAME} 
