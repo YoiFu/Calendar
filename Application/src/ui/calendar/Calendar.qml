@@ -6,7 +6,7 @@ import Qt5Compat.GraphicalEffects
 import ui.components 1.0
 import CPalette 1.0
 
-Rectangle {
+Item {
 	id: root
 
 	implicitHeight: 270
@@ -14,104 +14,130 @@ Rectangle {
 
 	property QtObject temporalObject: null
 
-	signal openSettings
+    signal openSettings
 
-	radius: 8
+    Image  {
+        id: img
 
-	color: CPalette.background2
+        property bool rounded: true
+        property bool adapt: true
 
-	ColumnLayout {
-		id: content
+        anchors.fill: parent
+        visible: true
+        source: "file:///C:/Users/admin/Downloads/1354055.png"
+        layer.enabled: rounded
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                anchors.centerIn: parent
+                width: img.adapt ? img.width : Math.min(img.width, img.height)
+                height: img.adapt ? img.height : width
+                radius: internal.radius
 
-		anchors {
-			top: parent.top
-			horizontalCenter: parent.horizontalCenter
-			topMargin: 10
-		}
+                color: "red"
+            }
+        }
+    }
 
-		spacing: 0
+    Rectangle {
+        anchors.fill: parent
 
-		RowLayout {
-			Layout.fillWidth: true
+        radius: internal.radius
+        color: CPalette.background2
 
-			MouseArea {
-				id: mouseArea
+        opacity: 0.5
+        ColumnLayout {
+            id: content
 
-				implicitHeight: 14
-				implicitWidth: 14
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                topMargin: 10
+            }
 
-				Layout.leftMargin: 2
-				Layout.alignment: Qt.AlignVCenter
-				hoverEnabled: true
+            spacing: 0
 
-				Image {
-					id: settingsIcon
+            RowLayout {
+                Layout.fillWidth: true
 
-					anchors.fill: parent
+                MouseArea {
+                    id: mouseArea
 
-					source: "../assets/Settings.svg"
+                    implicitHeight: 14
+                    implicitWidth: 14
 
-					ColorOverlay {
-						anchors.fill: parent
-						source: settingsIcon
-						color: mouseArea.containsMouse ? "#D5D5D5" : "#9B9B9B"
-					}
-				}
+                    Layout.leftMargin: 2
+                    Layout.alignment: Qt.AlignVCenter
+                    hoverEnabled: true
 
-				onClicked: {
-					root.openSettings();
-				}
-			}
+                    Image {
+                        id: settingsIcon
 
-			Item {
-				Layout.fillWidth: true
-			}
+                        anchors.fill: parent
 
-			Function {
-				Layout.alignment: Qt.AlignVCenter
-				onHide: function() {
+                        source: "../assets/Settings.svg"
 
-				}
-				onShrink: function() {
+                        ColorOverlay {
+                            anchors.fill: parent
+                            source: settingsIcon
+                            color: mouseArea.containsMouse ? "#D5D5D5" : "#9B9B9B"
+                        }
+                    }
 
-				}
-				onClose: function() {
-				}
-			}
-		}
+                    onClicked: {
+                        root.openSettings();
+                    }
+                }
 
-		RowLayout {
-			id: calendarAdjust
+                Item {
+                    Layout.fillWidth: true
+                }
 
-			Layout.alignment: Qt.AlignHCenter
-			Layout.topMargin: 8
+                Function {
+                    Layout.alignment: Qt.AlignVCenter
+                    onHide: function() {
 
-			spacing: 6
+                    }
+                    onShrink: function() {
 
-			TimelineBar{
-				id: timelineBar
+                    }
+                    onClose: function() {
+                    }
+                }
+            }
 
-				temporalObject: root.temporalObject
+            RowLayout {
+                id: calendarAdjust
 
-				onOpenMonthSelectionPopup: {
-					monthSelectionPopup.open();
-				}
-			}
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 8
 
-			CustomSwitch {
-				id: calendarType
-			}
-		}
+                spacing: 6
 
-		Days {
-			id: daysView
+                TimelineBar{
+                    id: timelineBar
 
-			Layout.alignment: Qt.AlignHCenter
-			Layout.topMargin: 6
+                    temporalObject: root.temporalObject
 
-			temporalObject: root.temporalObject
-		}
-	}
+                    onOpenMonthSelectionPopup: {
+                        monthSelectionPopup.open();
+                    }
+                }
+
+                CustomSwitch {
+                    id: calendarType
+                }
+            }
+
+            Days {
+                id: daysView
+
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: 6
+
+                temporalObject: root.temporalObject
+            }
+        }
+    }
 
 	MonthSelectionPopup {
 		id: monthSelectionPopup
@@ -119,4 +145,10 @@ Rectangle {
 		anchors.centerIn: parent
 		temporalObject: root.temporalObject
 	}
+
+    QtObject {
+        id: internal
+
+        readonly property int radius: 8
+    }
 }

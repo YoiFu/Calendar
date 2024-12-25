@@ -17,6 +17,7 @@ qt_add_qml_module(${PROJECT_NAME}
         calendar/TimelineBar.qml
         components/CustomSwitch.qml
         components/Function.qml
+        components/CustomToggle.qml
         settings/Settings.qml
         settings/ColorPickerPopup.qml
         settings/ColorPicker.qml
