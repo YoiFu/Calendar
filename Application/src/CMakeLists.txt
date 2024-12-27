@@ -9,6 +9,7 @@ find_package(Qt6 COMPONENTS Quick Core REQUIRED)
 
 add_subdirectory(ui)
 add_subdirectory(core)
+add_subdirectory(model)
 
 add_executable(${PROJECT_NAME} WIN32
     main.cpp
@@ -22,5 +23,6 @@ target_link_libraries(${PROJECT_NAME}
         Qt6::Core
         ui
         core
+        model
 )
 

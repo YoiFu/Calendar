@@ -4,7 +4,7 @@
 
 namespace {
 
-const uint32_t g_layer1 = 0x557174;
+const uint32_t g_layer1 = 0x76A2A7;
 const uint32_t g_layer2 = 0x9DAD7F;
 const uint32_t g_layer3 = 0xC7CFB7;
 const uint32_t g_layer4 = 0xF7F7E8;

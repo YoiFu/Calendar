@@ -122,15 +122,16 @@ Popup{
 				font.pixelSize: 12
 				font.bold: true
                 color: isChosenMonth(model.index + 1) ? CPalette.layer4 : CPalette.layer1
-
-				MouseArea {
-					anchors.fill: parent
-
-					onClicked: {
-						temporalObject.month = model.index + 1
-					}
-				}
 			}
+
+            MouseArea {
+                anchors.fill: parent
+
+                hoverEnabled: true
+                onClicked: {
+                    temporalObject.month = model.index + 1
+                }
+            }
 		}
 	}
 

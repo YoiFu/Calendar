@@ -12,7 +12,7 @@ Rectangle {
 	implicitHeight: 26
 	implicitWidth: 61
 
-    color: CPalette.layer3
+	color: CPalette.layer3
 
 	radius: 4
 
@@ -26,7 +26,7 @@ Rectangle {
 			}
 			PropertyChanges {
 				target: icon
-                source: "../assets/Solar.svg"
+				source: "../assets/Solar.svg"
 			}
 		},
 		State {
@@ -38,7 +38,7 @@ Rectangle {
 			}
 			PropertyChanges {
 				target: icon
-                source: "../assets/Lunar.svg"
+				source: "../assets/Lunar.svg"
 			}
 		}
 	]
@@ -61,7 +61,7 @@ Rectangle {
 		Text {
 			id: calendarType
 
-            color: CPalette.layer1
+			color: CPalette.layer1
 			Layout.alignment: Qt.AlignVCenter
 			font.pixelSize: 14
 		}

@@ -4,12 +4,12 @@ import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
 import QtQuick.Window
 
-import PaletteModel 1.0
-
 Item {
 	id: root
 
+    property QtObject paletteModel: null
 	property bool openPopup: false
+    property color cellColor
 
 	height: internal.outerRadius
 	width: internal.outerRadius
@@ -45,7 +45,7 @@ Item {
 
 		radius: internal.innerRadius
 
-		color: "red"
+        color: root.cellColor
 
 		MouseArea {
 			id: mouse
@@ -71,7 +71,7 @@ Item {
 			}
 		}
 
-		paletteModel: PaletteModel
+        paletteModel: root.paletteModel
 	}
 
 	QtObject {

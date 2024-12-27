@@ -51,7 +51,7 @@ public:
 	void operator= (const PaletteModel &) = delete;
 	~PaletteModel() = default;
 
-	static PaletteModel *instantiateQmlSingleton(QQmlEngine *engine, QJSEngine *jsEngine);
+    static PaletteModel *instantiateQmlSingleton();
 
 	QColor textColor() const;
 	QColor backgroundColor() const;

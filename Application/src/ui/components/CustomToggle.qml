@@ -4,10 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Material
 
 Switch {
-    id: mySwitch
-
-    property color checkedColor: "#79D7BE"
-    property color uncheckedColor: "#E5E5E5"
+    id: root
 
     width: 30
     height: 16
@@ -18,11 +15,11 @@ Switch {
         anchors.fill: parent
 
         radius: height/2
-        color: mySwitch.checked ? mySwitch.checkedColor : mySwitch.uncheckedColor
+        color: root.checked ? internal.checkedColor : internal.uncheckedColor
 
         Rectangle {
-            x: mySwitch.checked ? parent.width - width - 2 : 1
-            width: mySwitch.checked ? parent.height - 4 : parent.height - 2
+            x: root.checked ? parent.width - width - 2 : 1
+            width: root.checked ? parent.height - 4 : parent.height - 2
             height: width
             radius: width
             anchors.verticalCenter: parent.verticalCenter
@@ -32,5 +29,12 @@ Switch {
                 NumberAnimation { duration: 200 }
             }
         }
+    }
+
+    QtObject {
+        id: internal
+
+        property color checkedColor: "#79D7BE"
+        property color uncheckedColor: "#E5E5E5"
     }
 }

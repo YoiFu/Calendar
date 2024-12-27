@@ -101,11 +101,8 @@ void ColorModel::setSingleColor(const QColor &)
 
 }
 
-PaletteModel *PaletteModel::instantiateQmlSingleton(QQmlEngine *engine, QJSEngine *jsEngine)
+PaletteModel *PaletteModel::instantiateQmlSingleton()
 {
-	Q_UNUSED(engine)
-	Q_UNUSED(jsEngine)
-
 	std::call_once(flag, []{
 		model = new PaletteModel();
 	});

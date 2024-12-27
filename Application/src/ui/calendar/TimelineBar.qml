@@ -14,7 +14,6 @@ Rectangle {
 	signal openMonthSelectionPopup();
 
 	implicitHeight: 26
-	width: 212
 
 	radius: 20
 

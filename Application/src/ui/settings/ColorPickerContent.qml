@@ -9,6 +9,7 @@ Item {
 	id: root
 
 	property QtObject paletteModel: null
+    property color targetColor
 	readonly property int contentWidth: internal.contentWidth + internal.triWidth
 
 	height: internal.contentHeight

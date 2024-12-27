@@ -18,6 +18,9 @@ qt_add_qml_module(${PROJECT_NAME}
         components/CustomSwitch.qml
         components/Function.qml
         components/CustomToggle.qml
+        components/SliderWithToolTips.qml
+        components/IconButton.qml
+        components/MaskedImage.qml
         settings/Settings.qml
         settings/ColorPickerPopup.qml
         settings/ColorPicker.qml
@@ -41,6 +44,12 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/Settings.svg
         assets/RGBAColor.png
         assets/Plus.svg
+        assets/More.svg
+        assets/Less.svg
+        assets/Brightness-increase.svg
+        assets/Brightness-decrease.svg
+        assets/Transparent.svg
+        assets/Solid.svg
 )
 
 target_link_libraries(${PROJECT_NAME} 

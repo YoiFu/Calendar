@@ -8,10 +8,11 @@ import ui.components 1.0
 Rectangle {
 	id: root
 
+    property QtObject model: null
+
 	radius: 4
 
-	implicitHeight: 270
-	implicitWidth: 200
+    implicitWidth: 280
 
 	component SettingsTextWithComponent: RowLayout {
 		id: template
@@ -36,7 +37,7 @@ Rectangle {
 		Loader {
 			id: loader
 
-            Layout.alignment: Qt.AlignVCenter
+			Layout.alignment: Qt.AlignVCenter
 		}
 	}
 
@@ -55,31 +56,52 @@ Rectangle {
 
 		SettingsTextWithComponent {
 			text: "Text Color"
-			sourceComponent: ColorPicker{}
+            sourceComponent: ColorPicker{
+                paletteModel: root.model.paletteModel
+                cellColor: root.model.textColor
+            }
 		}
 
 		SettingsTextWithComponent {
 			text: "Background Color"
-			sourceComponent: ColorPicker{}
+            sourceComponent: ColorPicker{
+                paletteModel: root.model.paletteModel
+                cellColor: root.model.backgroundColor
+            }
 		}
 
 		SettingsTextWithComponent {
 			text: "Accent Color"
-			sourceComponent: ColorPicker{}
-		}
-
-		SettingsTextWithComponent {
-			text: "Background"
-			sourceComponent: ColorPicker{}
+            sourceComponent: ColorPicker{
+                paletteModel: root.model.paletteModel
+                cellColor: root.model.accentColor
+            }
 		}
 
 		SettingsTextWithComponent {
 			text: "Custom Background"
-            sourceComponent: CustomToggle {
-                onToggled: {
+			sourceComponent: CustomToggle {
+                checked: root.model.customBackgroundEnabled
+				onToggled: {
 
-                }
-            }
+				}
+			}
+		}
+
+		SettingsTextWithComponent {
+			text: "Transparency"
+			sourceComponent: SliderWithToolTips {
+				id: sliderWithToolTips
+
+				height: 28
+				width: 160
+
+                sliderType: SliderWithToolTips.SliderType.Transparency
+                value: root.model.transparency
+
+				onValueChanged: function() {
+				}
+			}
 		}
 
 		Item {

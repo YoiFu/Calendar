@@ -9,12 +9,12 @@ import CPalette 1.0
 Item {
 	id: root
 
-	implicitHeight: 270
-	implicitWidth: 300
+    implicitHeight: 320
+    implicitWidth: 340
 
 	property QtObject temporalObject: null
 
-    signal openSettings
+	signal openSettings
 
     Image  {
         id: img
@@ -24,7 +24,8 @@ Item {
 
         anchors.fill: parent
         visible: true
-        source: "file:///C:/Users/admin/Downloads/1354055.png"
+        fillMode: Image.PreserveAspectCrop
+        source: "file:///C:/Project/Calendar/Application/1297444.jpg"
         layer.enabled: rounded
         layer.effect: OpacityMask {
             maskSource: Rectangle {
@@ -38,106 +39,110 @@ Item {
         }
     }
 
-    Rectangle {
-        anchors.fill: parent
+	Rectangle {
+		anchors.fill: parent
 
-        radius: internal.radius
-        color: CPalette.background2
+		radius: internal.radius
+        // color: CPalette.background2
 
-        opacity: 0.5
-        ColumnLayout {
-            id: content
+        color: "transparent"
+		ColumnLayout {
+			id: content
 
-            anchors {
-                top: parent.top
-                horizontalCenter: parent.horizontalCenter
-                topMargin: 10
-            }
+			anchors {
+				top: parent.top
+				horizontalCenter: parent.horizontalCenter
+				topMargin: 10
+			}
 
-            spacing: 0
+			spacing: 0
 
-            RowLayout {
-                Layout.fillWidth: true
+			RowLayout {
+				Layout.fillWidth: true
 
-                MouseArea {
-                    id: mouseArea
+				MouseArea {
+					id: mouseArea
 
-                    implicitHeight: 14
-                    implicitWidth: 14
+					implicitHeight: 14
+					implicitWidth: 14
 
-                    Layout.leftMargin: 2
-                    Layout.alignment: Qt.AlignVCenter
-                    hoverEnabled: true
+					Layout.leftMargin: 2
+					Layout.alignment: Qt.AlignVCenter
+					hoverEnabled: true
 
-                    Image {
-                        id: settingsIcon
+					Image {
+						id: settingsIcon
 
-                        anchors.fill: parent
+						anchors.fill: parent
 
-                        source: "../assets/Settings.svg"
+						source: "../assets/Settings.svg"
 
-                        ColorOverlay {
-                            anchors.fill: parent
-                            source: settingsIcon
-                            color: mouseArea.containsMouse ? "#D5D5D5" : "#9B9B9B"
-                        }
-                    }
+						ColorOverlay {
+							anchors.fill: parent
+							source: settingsIcon
+							color: mouseArea.containsMouse ? "#D5D5D5" : "#9B9B9B"
+						}
+					}
 
-                    onClicked: {
-                        root.openSettings();
-                    }
-                }
+					onClicked: {
+						root.openSettings();
+					}
+				}
+
+				Item {
+					Layout.fillWidth: true
+				}
+
+				Function {
+					Layout.alignment: Qt.AlignVCenter
+					onHide: function() {
+
+					}
+					onShrink: function() {
+
+					}
+					onClose: function() {
+					}
+				}
+			}
+
+			RowLayout {
+				id: calendarAdjust
+
+				Layout.alignment: Qt.AlignHCenter
+				Layout.topMargin: 8
+
+				TimelineBar{
+					id: timelineBar
+
+                    Layout.preferredWidth: 230
+
+					temporalObject: root.temporalObject
+
+					onOpenMonthSelectionPopup: {
+						monthSelectionPopup.open();
+					}
+				}
 
                 Item {
                     Layout.fillWidth: true
                 }
 
-                Function {
-                    Layout.alignment: Qt.AlignVCenter
-                    onHide: function() {
+				CustomSwitch {
+					id: calendarType
+				}
+			}
 
-                    }
-                    onShrink: function() {
+			Days {
+				id: daysView
 
-                    }
-                    onClose: function() {
-                    }
-                }
-            }
+				Layout.alignment: Qt.AlignHCenter
+				Layout.topMargin: 6
 
-            RowLayout {
-                id: calendarAdjust
-
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 8
-
-                spacing: 6
-
-                TimelineBar{
-                    id: timelineBar
-
-                    temporalObject: root.temporalObject
-
-                    onOpenMonthSelectionPopup: {
-                        monthSelectionPopup.open();
-                    }
-                }
-
-                CustomSwitch {
-                    id: calendarType
-                }
-            }
-
-            Days {
-                id: daysView
-
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 6
-
-                temporalObject: root.temporalObject
-            }
-        }
-    }
+				temporalObject: root.temporalObject
+			}
+		}
+	}
 
 	MonthSelectionPopup {
 		id: monthSelectionPopup
@@ -146,9 +151,9 @@ Item {
 		temporalObject: root.temporalObject
 	}
 
-    QtObject {
-        id: internal
+	QtObject {
+		id: internal
 
-        readonly property int radius: 8
-    }
+		readonly property int radius: 8
+	}
 }

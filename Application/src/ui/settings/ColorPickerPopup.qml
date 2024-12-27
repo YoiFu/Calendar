@@ -8,6 +8,7 @@ Popup {
 	id: root
 
 	property QtObject paletteModel: null
+    property color targetColor
 	property int preferredEdge: Qt.LeftEdge
 	property Item anchorItem: null
 	readonly property int popUpWidth: content.contentWidth
@@ -16,7 +17,9 @@ Popup {
 		id: content
 
 		paletteModel: root.paletteModel
+        targetColor: root.targetColor
 	}
+    modal: true
 
 	padding: 0
 

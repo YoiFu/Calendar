@@ -5,12 +5,15 @@ import ui.calendar 1.0
 import ui.settings 1.0
 import TemporalUnit 1.0
 import CPalette 1.0
+import settings 1.0
 
 Window {
 	id: root
 
-	height: 500
-	width: 700
+    property int componentSpacing: 4
+
+	height: 600
+    width: calendar.width + settings.width + root.componentSpacing
 
 	visible: true
 	title: qsTr("Hello World")
@@ -36,17 +39,14 @@ Window {
 	Settings {
 		id: settings
 
-		visible: false
-
 		anchors {
 			right: calendar.left
-			rightMargin: 4
+            rightMargin: root.componentSpacing
 			verticalCenter: parent.verticalCenter
 		}
-	}
 
-	Component.onCompleted: {
-		console.log(calendar.Window.window)
-		console.log(root)
+        model: SettingsModel{}
+        height: calendar.height
+        visible: false
 	}
 }

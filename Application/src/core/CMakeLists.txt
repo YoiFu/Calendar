@@ -7,13 +7,11 @@ set(CMAKE_AUTOMOC ON)
 set(sources
     Palette.cpp
     TemporalUnit.cpp
-    PaletteModel.cpp
 )
 
 set(headers
     Palette.h
     TemporalUnit.h
-    PaletteModel.h
 )
 
 add_library(${PROJECT_NAME} ${sources} ${headers})
