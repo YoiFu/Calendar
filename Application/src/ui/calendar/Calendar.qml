@@ -9,43 +9,43 @@ import CPalette 1.0
 Item {
 	id: root
 
-    implicitHeight: 320
-    implicitWidth: 340
+	implicitHeight: 320
+	implicitWidth: 340
 
 	property QtObject temporalObject: null
 
 	signal openSettings
 
-    Image  {
-        id: img
+	Image  {
+		id: img
 
-        property bool rounded: true
-        property bool adapt: true
+		property bool rounded: true
+		property bool adapt: true
 
-        anchors.fill: parent
-        visible: true
-        fillMode: Image.PreserveAspectCrop
-        source: "file:///C:/Project/Calendar/Application/1297444.jpg"
-        layer.enabled: rounded
-        layer.effect: OpacityMask {
-            maskSource: Rectangle {
-                anchors.centerIn: parent
-                width: img.adapt ? img.width : Math.min(img.width, img.height)
-                height: img.adapt ? img.height : width
-                radius: internal.radius
+		anchors.fill: parent
+		visible: true
+		fillMode: Image.PreserveAspectCrop
+		source: "file:///C:/Project/Calendar/Application/fantasy-scene-anime-style.jpg"
+		layer.enabled: rounded
+		layer.effect: OpacityMask {
+			maskSource: Rectangle {
+				anchors.centerIn: parent
+				width: img.adapt ? img.width : Math.min(img.width, img.height)
+				height: img.adapt ? img.height : width
+				radius: internal.radius
 
-                color: "red"
-            }
-        }
-    }
+				color: "red"
+			}
+		}
+	}
 
 	Rectangle {
 		anchors.fill: parent
 
 		radius: internal.radius
-        // color: CPalette.background2
+		// color: CPalette.background2
 
-        color: "transparent"
+		color: "transparent"
 		ColumnLayout {
 			id: content
 
@@ -115,7 +115,7 @@ Item {
 				TimelineBar{
 					id: timelineBar
 
-                    Layout.preferredWidth: 230
+					Layout.preferredWidth: 230
 
 					temporalObject: root.temporalObject
 
@@ -124,9 +124,9 @@ Item {
 					}
 				}
 
-                Item {
-                    Layout.fillWidth: true
-                }
+				Item {
+					Layout.fillWidth: true
+				}
 
 				CustomSwitch {
 					id: calendarType

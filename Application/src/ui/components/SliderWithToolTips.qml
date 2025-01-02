@@ -137,11 +137,12 @@ Item {
 						left: parent.left
 						verticalCenter: parent.verticalCenter
 					}
+					radius: sliderBackground.radius
 
 					height: parent.height
-					// width:
+					width: (sliderBackground.width * slider.value) / 100
 
-					color: sliderHander.color
+					color: "red"
 				}
 			}
 		}
