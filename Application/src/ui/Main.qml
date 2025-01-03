@@ -10,10 +10,10 @@ import settings 1.0
 Window {
 	id: root
 
-    property int componentSpacing: 4
+	property int componentSpacing: 4
 
 	height: 600
-    width: calendar.width + settings.width + root.componentSpacing
+	width: calendar.width + settings.width + root.componentSpacing
 
 	visible: true
 	title: qsTr("Hello World")
@@ -22,9 +22,15 @@ Window {
 
 	flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinMaxButtonsHint
 
+	SettingsModel{
+		id: settingsModel
+	}
+
 	Calendar {
 		id: calendar
+
 		temporalObject: TemporalUnit
+		settingsModel: settingsModel
 
 		anchors {
 			right: parent.right
@@ -41,12 +47,12 @@ Window {
 
 		anchors {
 			right: calendar.left
-            rightMargin: root.componentSpacing
+			rightMargin: root.componentSpacing
 			verticalCenter: parent.verticalCenter
 		}
 
-        model: SettingsModel{}
-        height: calendar.height
-        visible: false
+		model: settingsModel
+		height: calendar.height
+		visible: false
 	}
 }

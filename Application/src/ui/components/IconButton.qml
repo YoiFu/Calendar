@@ -4,48 +4,46 @@ import QtQuick.Templates as T
 
 import CPalette 1.0
 
-Image {
+MaskedImage {
 	id: root
 
-	property alias source: maskedImg.source
-	property alias sourceSize: maskedImg.sourceSize
+	property bool containMouse: mouseArea.containsMouse
 
 	signal clicked
 	signal released
-	signal buttonPressed
+	signal triggered
 
-	T.Button {
-		id: button
+	fillMode: Image.PreserveAspectFit
+	sourceSize: internal.defaultIconSize
+	color: root.containMouse ? CPalette.layerHover2 : CPalette.layer2
+
+	MouseArea {
+		id: mouseArea
 
 		anchors.fill: parent
 
-		onClicked: function() {
+		hoverEnabled: true
+		onClicked: {
+			console.log('DEBUG')
 			root.clicked();
 		}
 		onReleased: function() {
+			timer.stop();
 			root.released();
 		}
-		onPressed: function() {
-			root.buttonPressed();
+		onPressAndHold: function() {
+			timer.start();
 		}
-		focusPolicy: Qt.NoFocus
+	}
 
-		MaskedImage {
-			id: maskedImg
+	Timer {
+		id: timer
 
-			anchors.fill: parent
-
-			fillMode: Image.PreserveAspectFit
-			sourceSize: internal.defaultIconSize
-			color: mouseArea.containsMouse ? CPalette.layerHover2 : CPalette.layer2
-
-			MouseArea {
-				id: mouseArea
-
-				anchors.fill: parent
-
-				hoverEnabled: true
-			}
+		interval: 10
+		running: false
+		repeat: true
+		onTriggered: {
+			root.triggered();
 		}
 	}
 

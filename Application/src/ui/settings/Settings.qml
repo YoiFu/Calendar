@@ -8,11 +8,11 @@ import ui.components 1.0
 Rectangle {
 	id: root
 
-    property QtObject model: null
+	property QtObject model: null
 
 	radius: 4
 
-    implicitWidth: 280
+	implicitWidth: 280
 
 	component SettingsTextWithComponent: RowLayout {
 		id: template
@@ -55,51 +55,84 @@ Rectangle {
 		spacing: 8
 
 		SettingsTextWithComponent {
+			id: textColor
+
+			Layout.fillWidth: true
+
 			text: "Text Color"
-            sourceComponent: ColorPicker{
-                paletteModel: root.model.paletteModel
-                cellColor: root.model.textColor
-            }
+			sourceComponent: ColorPicker{
+				paletteModel: root.model.paletteModel
+				cellColor: root.model.textColor
+			}
 		}
 
 		SettingsTextWithComponent {
+			id: backgroundColor
+
+			Layout.fillWidth: true
+
 			text: "Background Color"
-            sourceComponent: ColorPicker{
-                paletteModel: root.model.paletteModel
-                cellColor: root.model.backgroundColor
-            }
+			sourceComponent: ColorPicker{
+				paletteModel: root.model.paletteModel
+				cellColor: root.model.backgroundColor
+			}
 		}
 
 		SettingsTextWithComponent {
+			id: accentColor
+
+			Layout.fillWidth: true
+
 			text: "Accent Color"
-            sourceComponent: ColorPicker{
-                paletteModel: root.model.paletteModel
-                cellColor: root.model.accentColor
-            }
+			sourceComponent: ColorPicker{
+				paletteModel: root.model.paletteModel
+				cellColor: root.model.accentColor
+			}
 		}
 
 		SettingsTextWithComponent {
+			id: customBackgroundEnabled
+
+			Layout.fillWidth: true
+
 			text: "Custom Background"
 			sourceComponent: CustomToggle {
-                checked: root.model.customBackgroundEnabled
+				checked: root.model.customBackgroundEnabled
 				onToggled: {
-
+					root.model.customBackgroundEnabled = checked;
 				}
+			}
+		}
+
+		FolderInsert {
+			id: insertBackground
+
+			Layout.fillWidth: true
+
+			visible: root.model.customBackgroundEnabled
+			sourcePath: root.model.sourcePath
+
+			onOpenFolder: {
+				root.model.openFolder();
 			}
 		}
 
 		SettingsTextWithComponent {
 			text: "Transparency"
+
+			Layout.fillWidth: true
+
 			sourceComponent: SliderWithToolTips {
 				id: sliderWithToolTips
 
 				height: 28
 				width: 160
 
-                sliderType: SliderWithToolTips.SliderType.Transparency
-                value: root.model.transparency
+				sliderType: SliderWithToolTips.SliderType.Transparency
+				value: root.model.transparency
 
 				onValueChanged: function() {
+					root.model.transparency = value;
 				}
 			}
 		}

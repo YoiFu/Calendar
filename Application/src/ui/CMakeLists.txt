@@ -21,6 +21,8 @@ qt_add_qml_module(${PROJECT_NAME}
         components/SliderWithToolTips.qml
         components/IconButton.qml
         components/MaskedImage.qml
+        components/CustomTooltip.qml
+        components/FolderInsert.qml
         settings/Settings.qml
         settings/ColorPickerPopup.qml
         settings/ColorPicker.qml
@@ -50,6 +52,7 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/Brightness-decrease.svg
         assets/Transparent.svg
         assets/Solid.svg
+        assets/File.svg
 )
 
 target_link_libraries(${PROJECT_NAME} 

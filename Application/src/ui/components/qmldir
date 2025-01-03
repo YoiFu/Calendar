@@ -3,6 +3,8 @@ module components
 CustomSwitch 1.0 CustomSwitch.qml
 Function 1.0 Function.qml
 CustomToggle 1.0 CustomToggle.qml
+CustomTooltip 1.0 CustomTooltip.qml
 SliderWithToolTips 1.0 SliderWithToolTips.qml
 MaskedImage 1.0 MaskedImage.qml
 IconButton 1.0 IconButton.qml
+FolderInsert 1.0 FolderInsert.qml

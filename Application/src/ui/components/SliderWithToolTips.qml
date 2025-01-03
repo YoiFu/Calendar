@@ -48,18 +48,20 @@ Item {
 			source: internal.sliderData.lessImage
 			enabled: root.value !== root.from
 
-			ToolTip.text: internal.sliderData.lessText
-			ToolTip.visible: lessIconArea.containsMouse
-
 			onReleased: function() {
 				internal.decrease();
 			}
 
-			MouseArea {
-				id: lessIconArea
+			onTriggered: function() {
+				internal.decrease();
+			}
 
-				anchors.fill: parent
-				hoverEnabled: true
+			CustomTooltip {
+				text: internal.sliderData.lessText
+				visible: lessButton.containMouse
+
+				x: lessButton.x - width / 2
+				y: lessButton.y - 40
 			}
 		}
 
@@ -80,46 +82,35 @@ Item {
 				root.moved();
 			}
 
-			handle: Rectangle {
-				id: sliderHander
+			// handle: Rectangle {
+			// 	id: sliderHander
 
-				color: "black"
-				height: 16
-				width: 16
-				radius: width
+			// 	color: "black"
+			// 	height: 16
+			// 	width: 16
+			// 	radius: width
 
-				anchors {
-					verticalCenter: parent.verticalCenter
-				}
+			// 	anchors {
+			// 		verticalCenter: parent.verticalCenter
+			// 	}
 
-				ToolTip {
-					id: sliderToolTip
+			// 	CustomTooltip {
+			// 		id: sliderToolTip
 
-					x: sliderHander.x - parent.width / 2
-					y: sliderHander.y - 40
+			// 		x: sliderHander.x - parent.width / 2
+			// 		y: sliderHander.y - 40s
 
-					visible: slider.pressed || slider.hovered
+			// 		text: slider.value + "%"
+			// 		visible: slider.pressed || slider.hovered
+			// 	}
 
-					padding: 0
+			// 	MouseArea {
+			// 		id: handleSliderArea
 
-					contentItem: Rectangle {
-						color: CPalette.layer6
-
-						Text {
-							anchors.centerIn: parent
-							color: "#000000"
-							text: slider.value + "%"
-						}
-					}
-				}
-
-				MouseArea {
-					id: handleSliderArea
-
-					anchors.fill: parent
-					hoverEnabled: true
-				}
-			}
+			// 		anchors.fill: parent
+			// 		hoverEnabled: true
+			// 	}
+			// }
 
 			background: Rectangle {
 				id: sliderBackground
@@ -131,19 +122,6 @@ Item {
 				radius: height/2
 
 				color: "#C0C0C0"
-
-				Rectangle {
-					anchors {
-						left: parent.left
-						verticalCenter: parent.verticalCenter
-					}
-					radius: sliderBackground.radius
-
-					height: parent.height
-					width: (sliderBackground.width * slider.value) / 100
-
-					color: "red"
-				}
 			}
 		}
 
@@ -157,21 +135,20 @@ Item {
 			source: internal.sliderData.moreImage
 			enabled: root.value !== root.from
 
-			ToolTip.text: internal.sliderData.moreText
-			ToolTip.visible: moreBtnArea.containsMouse
-
 			onReleased: function() {
 				internal.increase();
 			}
 
-			onClicked: {
-				console.log("DEBUG")
+			onTriggered: function() {
+				internal.increase();
 			}
 
-			MouseArea {
-				id: moreBtnArea
-				anchors.fill: parent
-				hoverEnabled: true
+			CustomTooltip {
+				text: internal.sliderData.moreText
+				visible: moreButton.containMouse
+
+				x: moreButton.x - moreButton.width / 2
+				y: moreButton.y - 40
 			}
 		}
 	}
@@ -241,5 +218,16 @@ Item {
 		readonly property int iconWidth: 24
 		readonly property int iconHeight: 24
 		readonly property int backgroundSliderHeight: 4
+
+		function increase() {
+			if (root.value < 100) {
+				root.value = root.value + 1;
+			}
+		}
+		function decrease() {
+			if (root.value > 0) {
+				root.value = root.value - 1;
+			}
+		}
 	}
 }

@@ -30,21 +30,21 @@ static Palette *palette = nullptr;
 
 Palette *Palette::instantiateQmlSingleton(QQmlEngine *engine, QJSEngine *jsEngine)
 {
-    Q_UNUSED(jsEngine)
-    Q_UNUSED(engine)
+	Q_UNUSED(jsEngine)
+	Q_UNUSED(engine)
 
-    std::call_once(flag, [] {
-        palette = new Palette();
+	std::call_once(flag, [] {
+		palette = new Palette();
 
-        std::atexit([] {
-            if (palette) {
-                delete palette;
-            }
-        });
-    });
+		std::atexit([] {
+			if (palette) {
+				delete palette;
+			}
+		});
+	});
 
-    QJSEngine::setObjectOwnership(palette, QJSEngine::CppOwnership);
-    return palette;
+	QJSEngine::setObjectOwnership(palette, QJSEngine::CppOwnership);
+	return palette;
 }
 
 QColor Palette::layer1() const
@@ -138,7 +138,7 @@ QColor Palette::error1() const
 }
 
 Palette::Palette(QObject *parent)
-	: QObject(parent)
+    : QObject(parent)
 {
 }
 

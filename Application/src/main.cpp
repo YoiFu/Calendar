@@ -1,6 +1,6 @@
-#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QApplication>
 
 #include "Palette.h"
 #include "TemporalUnit.h"
@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-	QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 	QQmlApplicationEngine engine;
 
 	const QUrl url(QStringLiteral("ui/Main.qml"));

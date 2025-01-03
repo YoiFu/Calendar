@@ -13,39 +13,71 @@ Item {
 	implicitWidth: 340
 
 	property QtObject temporalObject: null
+	property QtObject settingsModel: null
 
 	signal openSettings
 
-	Image  {
-		id: img
+    Item {
+        id: backgroundContainer
 
-		property bool rounded: true
-		property bool adapt: true
+        property bool enabledCustomBackground
 
-		anchors.fill: parent
-		visible: true
-		fillMode: Image.PreserveAspectCrop
-		source: "file:///C:/Project/Calendar/Application/fantasy-scene-anime-style.jpg"
-		layer.enabled: rounded
-		layer.effect: OpacityMask {
-			maskSource: Rectangle {
-				anchors.centerIn: parent
-				width: img.adapt ? img.width : Math.min(img.width, img.height)
-				height: img.adapt ? img.height : width
-				radius: internal.radius
+        anchors.fill: parent
 
-				color: "red"
-			}
+		Rectangle {
+			anchors.fill: parent
+
+			radius: internal.radius
+
+			color: CPalette.layer4
+			opacity: settingsModel.transparency / 100
+            visible: !backgroundContainer.enabledCustomBackground
 		}
+
+		Image  {
+			id: img
+
+			anchors.fill: parent
+
+            layer.enabled: true
+			layer.effect: OpacityMask {
+				maskSource: Rectangle {
+					anchors.centerIn: parent
+                    width: img.width
+                    height: img.height
+					radius: internal.radius
+				}
+			}
+
+            fillMode: Image.PreserveAspectCrop
+            source: root.settingsModel.sourcePath
+            opacity: settingsModel.transparency / 100
+            visible: backgroundContainer.enabledCustomBackground
+		}
+
+        states: [
+            State {
+                name: "solid"
+                when: !root.settingsModel.customBackgroundEnabled || root.settingsModel.sourcePath === ""
+                PropertyChanges {
+                    target: backgroundContainer
+                    enabledCustomBackground: false
+                }
+            },
+            State {
+                name: "custom"
+                when: root.settingsModel.customBackgroundEnabled && !root.settingsModel.sourcePath !== ""
+                PropertyChanges {
+                    target: backgroundContainer
+                    enabledCustomBackground: true
+                }
+            }
+        ]
 	}
 
-	Rectangle {
+	Item {
 		anchors.fill: parent
 
-		radius: internal.radius
-		// color: CPalette.background2
-
-		color: "transparent"
 		ColumnLayout {
 			id: content
 
