@@ -7,9 +7,9 @@ import QtQuick.Window
 Item {
 	id: root
 
-    property QtObject paletteModel: null
+	property QtObject paletteModel: null
 	property bool openPopup: false
-    property color cellColor
+	property color cellColor
 
 	height: internal.outerRadius
 	width: internal.outerRadius
@@ -45,7 +45,7 @@ Item {
 
 		radius: internal.innerRadius
 
-        color: root.cellColor
+		color: root.cellColor
 
 		MouseArea {
 			id: mouse
@@ -71,7 +71,8 @@ Item {
 			}
 		}
 
-        paletteModel: root.paletteModel
+		paletteModel: root.paletteModel
+		targetColor: root.cellColor
 	}
 
 	QtObject {

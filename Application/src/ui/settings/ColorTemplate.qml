@@ -11,6 +11,8 @@ GridLayout {
 
 	property QtObject paletteModel: null
 
+	signal colorPicked(var chosenColor)
+
 	height: internal.templateHeight * 2 + internal.spacing
 
 	flow: GridLayout.LeftToRight
@@ -63,6 +65,7 @@ GridLayout {
 					anchors.fill: parent
 					onClicked: {
 						outter.visible = !outter.visible;
+						root.colorPicked(inner.color);
 					}
 				}
 			}

@@ -9,7 +9,7 @@ Item {
 	id: root
 
 	property QtObject paletteModel: null
-    property color targetColor
+	required property color targetColor
 	readonly property int contentWidth: internal.contentWidth + internal.triWidth
 
 	height: internal.contentHeight
@@ -47,6 +47,8 @@ Item {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.preferredHeight: 140
 				Layout.preferredWidth: 140
+
+				targetColor: root.targetColor
 			}
 
 			ColorAlphaSlider {
@@ -57,6 +59,8 @@ Item {
 			ColorDetails {
 				Layout.fillWidth: true
 				Layout.topMargin: 8
+
+				targetColor: root.targetColor
 			}
 
 			ColorTemplate {
@@ -64,6 +68,9 @@ Item {
 				Layout.topMargin: 8
 
 				paletteModel: root.paletteModel
+				onColorPicked: function (pickedColor) {
+					root.targetColor = pickedColor;
+				}
 			}
 
 			ColorCustomList {

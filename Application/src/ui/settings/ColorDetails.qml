@@ -3,10 +3,14 @@ import QtQml
 import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
-import QtQuick.Window
+import QtQuick.Controls.Material
+
+import "../js_functions/FunctionUtils.js" as Utils
 
 Item {
 	id: root
+
+	required property color targetColor
 
 	height: 24
 
@@ -55,6 +59,8 @@ Item {
 			font.pixelSize: 11
 
 			color: textColor
+
+			// background: Item{}
 		}
 	}
 
@@ -78,7 +84,7 @@ Item {
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignVCenter
 					symbolText: "R"
-					valueText: "255"
+					valueText: internal.convertColorChannelValue(internal.red).toString()
 				}
 
 				Splitter {
@@ -89,7 +95,7 @@ Item {
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignVCenter
 					symbolText: "G"
-					valueText: "255"
+					valueText: internal.convertColorChannelValue(internal.green).toString()
 				}
 
 				Splitter {
@@ -100,7 +106,7 @@ Item {
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignVCenter
 					symbolText: "B"
-					valueText: "255"
+					valueText: internal.convertColorChannelValue(internal.blue).toString()
 				}
 			}
 		}
@@ -125,13 +131,13 @@ Item {
 					Layout.preferredHeight: parent.height - internal.innerSpacing * 2
 					Layout.preferredWidth: height
 					radius: 2
-					color: "red"
+					color: root.targetColor
 				}
 
 				SymbolWithValue {
 					Layout.fillHeight: true
 					symbolText: "#"
-					valueText: "FFFFF"
+					valueText: Utils.hexaFromRGBA(internal.red, internal.green, internal.blue)
 				}
 			}
 		}
@@ -142,5 +148,13 @@ Item {
 
 		readonly property color boderColor: "#9D9D9D"
 		readonly property int innerSpacing: 4
+
+		function convertColorChannelValue(color) {
+			return (color / 100) * 255
+		}
+
+		property int red: root.targetColor.r
+		property int green: root.targetColor.g
+		property int blue: root.targetColor.b
 	}
 }

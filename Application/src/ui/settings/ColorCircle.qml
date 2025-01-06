@@ -3,150 +3,115 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtQml.Models
 
+import "../js_functions/FunctionUtils.js" as Utils
+
 Item {
-    id: root
+	id: root
 
-    property real hue : 1
-    property real saturation : 1
+	required property color targetColor
 
-    signal updateHS(var hueSignal, var saturationSignal)
-    signal updateColor()
+	property real hue: 1
+	property real saturation: 1
 
-    states: [
-        State {
-            name: "editing"
-            PropertyChanges {
-                target: root
-                hue: hue
-                saturation: saturation
-            }
-        },
-        State {
-            name: "normal"
-        }
-    ]
-    state: "normal"
+	signal updateHS(var hueSignal, var saturationSignal, var value, var alpha)
+	signal updateColor()
 
-    Rectangle {
-        id: rgbColorCircle
+	states: [
+		State {
+			name: "editing"
+			PropertyChanges {
+				target: root
+				hue: hue
+				saturation: saturation
+			}
+		},
+		State {
+			name: "normal"
+		}
+	]
+	state: "normal"
 
-        anchors.fill: parent
-        color: "transparent"
+	Item {
+		id: rgbColorCircle
 
-        // ShaderEffect {
-        //     id: shader
+		anchors.fill: parent
 
-        //     anchors.fill: parent
-        //     vertexShader: "
-        //         uniform highp mat4 qt_Matrix;
-        //         attribute highp vec4 qt_Vertex;
-        //         attribute highp vec2 qt_MultiTexCoord0;
-        //         varying highp vec2 coord;
+		Image {
+			height: parent.height + 2
+			width: parent.width + 2
+			anchors.centerIn: parent
+			source: "../assets/RGBAColor.png"
+		}
 
-        //         void main()
-        //         {
-        //             coord = qt_MultiTexCoord0 - vec2(0.5, 0.5);
-        //             gl_Position = qt_Matrix * qt_Vertex;
-        //         }"
-        //     fragmentShader: "
-        //         varying highp vec2 coord;
+		Rectangle {
+			id: colorPicker
+			property int r : 8
 
-        //         vec3 hsv2rgb(in vec3 c)
-        //         {
-        //             vec4 k = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-        //             vec3 p = abs(fract(c.xxx + k.xyz) * 6.0 - k.www);
-        //             return c.z * mix(k.xxx, clamp(p - k.xxx, 0.0, 1.0), c.y);
-        //         }
+			x: parent.width/2 * (1 + root.saturation * Math.cos(2 * Math.PI * root.hue - Math.PI)) - 8
+			y: parent.width/2 * (1 + root.saturation * Math.sin(-2 * Math.PI * root.hue - Math.PI)) - 8
+			height: 22.5
+			width: 22.5
+			radius: width
+			color: internal.updateCircleColor(root.hue, root.saturation)
+			border {
+				color: "white"
+				width: 1
+			}
+		}
 
-        //         void main()
-        //         {
-        //             const float PI = 3.14159265358979323846264;
-        //             float s = sqrt(coord.x * coord.x + coord.y * coord.y);
+		MouseArea {
+			id : colorCircleArea
 
-        //             if( s > 0.5 )
-        //             {
-        //                 gl_FragColor = vec4(0, 0, 0, 0);
-        //                 return;
-        //             }
+			function keepCursorIncolorCircleArea(mouse, colorCircleArea, colorCircleArea) {
+				root.state = 'editing'
+				if (mouse.buttons & Qt.LeftButton) {
+					// cartesian to polar coords
+					var distance = Math.sqrt(Math.pow(mouse.x-colorCircleArea.width/2,2)+Math.pow(mouse.y-colorCircleArea.height/2,2));
+					var theta = Math.atan2(((mouse.y-colorCircleArea.height/2)*(-1)),((mouse.x-colorCircleArea.width/2)));
 
-        //             float h = - atan( coord.y / coord.x );
-        //             s *= 2.0;
+					// colorCircleArea limit
+					if(distance > colorCircleArea.width/2)
+						distance = colorCircleArea.width/2;
 
-        //             if( coord.x >= 0.0 )
-        //             {
-        //                 h += PI;
-        //             }
+					// polar to cartesian coords
+					var cursor = Qt.vector2d(0, 0);
+					cursor.x = Math.max(-colorPicker.r, Math.min(colorCircleArea.width, distance*Math.cos(theta)+colorCircleArea.width/2)-colorPicker.r);
+					cursor.y = Math.max(-colorPicker.r, Math.min(colorCircleArea.height, colorCircleArea.height/2-distance*Math.sin(theta)-colorPicker.r));
 
-        //             h = h / (2.0 * PI);
-        //             vec3 hsl = vec3(h, s, 1.0);
-        //             vec3 rgb = hsv2rgb(hsl);
-        //             gl_FragColor.rgb = rgb;
-        //             gl_FragColor.a = 1.0;
-        //         }"
-        // }
+					hue = Math.ceil((Math.atan2(((cursor.y+colorPicker.r-colorCircleArea.height/2)*(-1)),((cursor.x+colorPicker.r-colorCircleArea.width/2)))/(Math.PI*2)+0.5)*100)/100
+					saturation = Math.ceil(Math.sqrt(Math.pow(cursor.x+colorPicker.r-width/2,2)+Math.pow(cursor.y+colorPicker.r-height/2,2))/colorCircleArea.height*2*100)/100;
+					root.updateHS(hue, saturation , 1, 1);
+				}
+			}
 
-        Image {
-            height: parent.height + 2
-            width: parent.width + 2
-            anchors.centerIn: parent
-            source: "../assets/RGBAColor.png"
-        }
+			anchors.fill: parent
 
-        Rectangle {
-            id: colorPicker
-            property int r : 8
+			onPositionChanged: function (mouse) {
+				colorPicker.color = internal.updateCircleColor(root.hue, root.saturation)
+				root.targetColor = internal.updateCircleColor(root.hue, root.saturation)
+				root.updateColor()
+				keepCursorIncolorCircleArea(mouse, colorCircleArea,  colorCircleArea);
+			}
 
-            x: parent.width/2 * (1 + root.saturation * Math.cos(2 * Math.PI * root.hue - Math.PI)) - r
-            y: parent.width/2 * (1 + root.saturation * Math.sin(-2 * Math.PI * root.hue - Math.PI)) - r
-            height: 22.5
-            width: 22.5
-            radius: width
-            color: "transparent"
-            border {
-                color: "white"
-                width: 1.5
-            }
-        }
+			onPressed: function (mouse) {
+				colorPicker.color = internal.updateCircleColor(root.hue, root.saturation)
+				root.targetColor = internal.updateCircleColor(root.hue, root.saturation)
+				root.updateColor()
+				keepCursorIncolorCircleArea(mouse, colorCircleArea, colorCircleArea);
+			}
 
-        MouseArea {
-            id : colorCircleArea
-            // Keep cursor in colorCircleArea
-            function keepCursorIncolorCircleArea(mouse, colorCircleArea, colorCircleArea) {
-                root.state = 'editing'
-                if (mouse.buttons & Qt.LeftButton) {
-                    // cartesian to polar coords
-                    var distance = Math.sqrt(Math.pow(mouse.x-colorCircleArea.width/2,2)+Math.pow(mouse.y-colorCircleArea.height/2,2));
-                    var theta = Math.atan2(((mouse.y-colorCircleArea.height/2)*(-1)),((mouse.x-colorCircleArea.width/2)));
+			onReleased: {
+				root.state = 'normal'
+			}
+		}
+	}
 
-                    // colorCircleArea limit
-                    if(distance > colorCircleArea.width/2)
-                        distance = colorCircleArea.width/2;
+	QtObject {
+		id: internal
 
-                    // polar to cartesian coords
-                    var cursor = Qt.vector2d(0, 0);
-                    cursor.x = Math.max(-colorPicker.r, Math.min(colorCircleArea.width, distance*Math.cos(theta)+colorCircleArea.width/2)-colorPicker.r);
-                    cursor.y = Math.max(-colorPicker.r, Math.min(colorCircleArea.height, colorCircleArea.height/2-distance*Math.sin(theta)-colorPicker.r));
-
-                    hue = Math.ceil((Math.atan2(((cursor.y+colorPicker.r-colorCircleArea.height/2)*(-1)),((cursor.x+colorPicker.r-colorCircleArea.width/2)))/(Math.PI*2)+0.5)*100)/100
-                    saturation = Math.ceil(Math.sqrt(Math.pow(cursor.x+colorPicker.r-width/2,2)+Math.pow(cursor.y+colorPicker.r-height/2,2))/colorCircleArea.height*2*100)/100;
-                    root.updateHS(hue, saturation) ;
-                }
-            }
-            anchors.fill: parent
-
-            onPositionChanged: {
-                root.updateColor()
-                keepCursorIncolorCircleArea(mouse, colorCircleArea,  colorCircleArea);
-            }
-
-            onPressed: {
-                root.updateColor()
-                keepCursorIncolorCircleArea(mouse, colorCircleArea, colorCircleArea);
-            }
-
-            onReleased: {
-                root.state = 'normal'
-            }
-        }
-    }
+		function updateCircleColor(hue, saturation) {
+			const rgba = Utils.hsvaToRgba(Qt.vector4d(hue, saturation, 1, 1));
+			return Qt.rgba(rgba.x, rgba.y, rgba.z, rgba.w);
+		}
+	}
 }

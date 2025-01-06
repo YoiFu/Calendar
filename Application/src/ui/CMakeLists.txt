@@ -32,6 +32,7 @@ qt_add_qml_module(${PROJECT_NAME}
         settings/ColorPickerContent.qml
         settings/ColorTemplate.qml
         settings/ColorCustomList.qml
+        js_functions/FunctionUtils.js
     RESOURCES
         qmldir
         components/qmldir
