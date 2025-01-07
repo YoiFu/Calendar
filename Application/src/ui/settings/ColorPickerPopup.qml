@@ -13,17 +13,22 @@ Popup {
 	property Item anchorItem: null
 	readonly property int popUpWidth: content.contentWidth
 
-	property Item contentComponent: ColorPickerContent {
-		id: content
+    signal colorChanged(var chosenColor)
 
-		paletteModel: root.paletteModel
-		targetColor: root.targetColor
-	}
 	modal: true
 
 	padding: 0
 
-	contentItem: contentComponent
+    contentItem: ColorPickerContent {
+        id: content
+
+        paletteModel: root.paletteModel
+        targetColor: root.targetColor
+
+        onColorChanged: function (chosenColor) {
+            root.colorChanged(chosenColor)
+        }
+    }
 
 	QtObject {
 		id: internal

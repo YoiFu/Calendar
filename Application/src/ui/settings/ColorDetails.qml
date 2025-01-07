@@ -27,6 +27,8 @@ Item {
 	}
 
 	component SymbolWithValue: RowLayout {
+        id: wrapperLayout
+
 		property alias symbolText: symText.text
 		property alias valueText: valueText.text
 		readonly property color textColor: "#FFFFFF"
@@ -42,25 +44,29 @@ Item {
 			font.pixelSize: 12
 			font.bold: true
 
-			color: textColor
+            color: wrapperLayout.textColor
 		}
 
 		Item {
 			Layout.fillWidth: true
 		}
 
-		Text {
+        TextField {
 			id: valueText
 
 			Layout.alignment: Qt.AlignVCenter
 
-			verticalAlignment: Text.AlignVCenter
-			horizontalAlignment: Text.AlignRight
 			font.pixelSize: 11
 
-			color: textColor
+            color: wrapperLayout.textColor
 
-			// background: Item{}
+            validator: RegularExpressionValidator  {
+                regularExpression: /^[0-255]+$/ // Only allows digits (0-9)
+            }
+
+            background: Item{
+                anchors.fill: parent
+            }
 		}
 	}
 
@@ -82,9 +88,10 @@ Item {
 
 				SymbolWithValue {
 					Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width/3
 					Layout.alignment: Qt.AlignVCenter
 					symbolText: "R"
-					valueText: internal.convertColorChannelValue(internal.red).toString()
+                    valueText: internal.convertColorChannelValue(internal.red)
 				}
 
 				Splitter {
@@ -92,10 +99,11 @@ Item {
 				}
 
 				SymbolWithValue {
-					Layout.fillHeight: true
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width/3
 					Layout.alignment: Qt.AlignVCenter
 					symbolText: "G"
-					valueText: internal.convertColorChannelValue(internal.green).toString()
+                    valueText: internal.convertColorChannelValue(internal.green)
 				}
 
 				Splitter {
@@ -103,10 +111,11 @@ Item {
 				}
 
 				SymbolWithValue {
-					Layout.fillHeight: true
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: parent.width/3
 					Layout.alignment: Qt.AlignVCenter
 					symbolText: "B"
-					valueText: internal.convertColorChannelValue(internal.blue).toString()
+                    valueText: internal.convertColorChannelValue(internal.blue)
 				}
 			}
 		}
@@ -150,7 +159,7 @@ Item {
 		readonly property int innerSpacing: 4
 
 		function convertColorChannelValue(color) {
-			return (color / 100) * 255
+            return color * 255
 		}
 
 		property int red: root.targetColor.r

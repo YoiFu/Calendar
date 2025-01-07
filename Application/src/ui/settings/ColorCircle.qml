@@ -8,13 +8,13 @@ import "../js_functions/FunctionUtils.js" as Utils
 Item {
 	id: root
 
-	required property color targetColor
+    required property color initialColor
 
 	property real hue: 1
 	property real saturation: 1
 
 	signal updateHS(var hueSignal, var saturationSignal, var value, var alpha)
-	signal updateColor()
+    signal colorChanged(var chosenColor)
 
 	states: [
 		State {
@@ -45,14 +45,15 @@ Item {
 
 		Rectangle {
 			id: colorPicker
+
 			property int r : 8
 
-			x: parent.width/2 * (1 + root.saturation * Math.cos(2 * Math.PI * root.hue - Math.PI)) - 8
-			y: parent.width/2 * (1 + root.saturation * Math.sin(-2 * Math.PI * root.hue - Math.PI)) - 8
-			height: 22.5
-			width: 22.5
+            x: parent.width/2 * (1 + root.saturation * Math.cos(2 * Math.PI * root.hue - Math.PI)) - colorPicker.r
+            y: parent.width/2 * (1 + root.saturation * Math.sin(-2 * Math.PI * root.hue - Math.PI)) - colorPicker.r
+            height: 22
+            width: 22
 			radius: width
-			color: internal.updateCircleColor(root.hue, root.saturation)
+            color: root.initialColor
 			border {
 				color: "white"
 				width: 1
@@ -65,16 +66,15 @@ Item {
 			function keepCursorIncolorCircleArea(mouse, colorCircleArea, colorCircleArea) {
 				root.state = 'editing'
 				if (mouse.buttons & Qt.LeftButton) {
-					// cartesian to polar coords
-					var distance = Math.sqrt(Math.pow(mouse.x-colorCircleArea.width/2,2)+Math.pow(mouse.y-colorCircleArea.height/2,2));
+
+                    var distance = Math.sqrt(Math.pow(mouse.x-colorCircleArea.width/2,2)+Math.pow(mouse.y-colorCircleArea.height/2,2));
 					var theta = Math.atan2(((mouse.y-colorCircleArea.height/2)*(-1)),((mouse.x-colorCircleArea.width/2)));
 
-					// colorCircleArea limit
-					if(distance > colorCircleArea.width/2)
-						distance = colorCircleArea.width/2;
+                    if(distance > colorCircleArea.width/2) {
+                        distance = colorCircleArea.width/2;
+                    }
 
-					// polar to cartesian coords
-					var cursor = Qt.vector2d(0, 0);
+                    var cursor = Qt.vector2d(0, 0);
 					cursor.x = Math.max(-colorPicker.r, Math.min(colorCircleArea.width, distance*Math.cos(theta)+colorCircleArea.width/2)-colorPicker.r);
 					cursor.y = Math.max(-colorPicker.r, Math.min(colorCircleArea.height, colorCircleArea.height/2-distance*Math.sin(theta)-colorPicker.r));
 
@@ -88,15 +88,13 @@ Item {
 
 			onPositionChanged: function (mouse) {
 				colorPicker.color = internal.updateCircleColor(root.hue, root.saturation)
-				root.targetColor = internal.updateCircleColor(root.hue, root.saturation)
-				root.updateColor()
+                root.colorChanged(colorPicker.color)
 				keepCursorIncolorCircleArea(mouse, colorCircleArea,  colorCircleArea);
 			}
 
 			onPressed: function (mouse) {
 				colorPicker.color = internal.updateCircleColor(root.hue, root.saturation)
-				root.targetColor = internal.updateCircleColor(root.hue, root.saturation)
-				root.updateColor()
+                root.colorChanged(colorPicker.color)
 				keepCursorIncolorCircleArea(mouse, colorCircleArea, colorCircleArea);
 			}
 
@@ -104,7 +102,7 @@ Item {
 				root.state = 'normal'
 			}
 		}
-	}
+    }
 
 	QtObject {
 		id: internal
