@@ -57,7 +57,6 @@ QColor SettingsModel::textColor() const
 
 void SettingsModel::setTextColor(QColor color)
 {
-	qDebug() << "DEBUG hehehe " << color;
 	if (m_textColor == color) {
 		return;
 	}
@@ -72,6 +71,7 @@ QColor SettingsModel::accentColor() const
 
 void SettingsModel::setAccentColor(QColor color)
 {
+    qDebug() << "DEBUG hehehe " << color;
 	if (m_accentColor == color) {
 		return;
 	}

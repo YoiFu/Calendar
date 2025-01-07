@@ -8,6 +8,9 @@ Item {
     id: root
 
     property QtObject temporalObject: nullptr
+    property color dayInWeekColor: CPalette.layer2
+    property color nonDayInWeekColor: CPalette.layer3
+    property color currentDay: CPalette.layer4
 
     width: 310
     height: 198
@@ -81,13 +84,13 @@ Item {
                 id: dayDelegate
 
                 required property var modelData
-                property color dayColor: (modelData.day === temporalObject.today && days.realMonth) ? CPalette.layer4 : CPalette.layer2
+                property color dayColor: (modelData.day === temporalObject.today && days.realMonth) ? CPalette.layer4 : root.dayInWeekColor
 
                 function correctColor(dayInCurrentMonth) {
                     if (dayInCurrentMonth) {
                         return dayDelegate.dayColor;
                     }
-                    return CPalette.layer3;
+                    return root.nonDayInWeekColor;
                 }
 
                 width: days.width / internal.dayOfWeek

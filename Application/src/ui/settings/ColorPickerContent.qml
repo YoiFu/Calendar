@@ -9,11 +9,13 @@ Item {
 	id: root
 
 	property QtObject paletteModel: null
-	required property color targetColor
+    required property color targetColor
 	readonly property int contentWidth: internal.contentWidth + internal.triWidth
 
 	height: internal.contentHeight
 	width: internal.contentWidth + internal.triWidth
+
+    signal colorChanged(var chosenColor)
 
 	Rectangle {
 		id: content
@@ -48,7 +50,10 @@ Item {
 				Layout.preferredHeight: 140
 				Layout.preferredWidth: 140
 
-				targetColor: root.targetColor
+                initialColor: root.targetColor
+                onColorChanged: function (chosenColor) {
+                    root.colorChanged(chosenColor)
+                }
 			}
 
 			ColorAlphaSlider {
@@ -60,7 +65,7 @@ Item {
 				Layout.fillWidth: true
 				Layout.topMargin: 8
 
-				targetColor: root.targetColor
+                targetColor: root.targetColor
 			}
 
 			ColorTemplate {
@@ -69,7 +74,7 @@ Item {
 
 				paletteModel: root.paletteModel
 				onColorPicked: function (pickedColor) {
-					root.targetColor = pickedColor;
+                    root.targetColor = pickedColor;
 				}
 			}
 

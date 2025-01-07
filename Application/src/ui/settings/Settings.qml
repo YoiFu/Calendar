@@ -63,6 +63,10 @@ Rectangle {
 			sourceComponent: ColorPicker{
 				paletteModel: root.model.paletteModel
 				cellColor: root.model.textColor
+
+                onColorChanged: function (chosenColor) {
+                    root.model.textColor = chosenColor;
+                }
 			}
 		}
 
@@ -75,6 +79,10 @@ Rectangle {
 			sourceComponent: ColorPicker{
 				paletteModel: root.model.paletteModel
 				cellColor: root.model.backgroundColor
+
+                onColorChanged: function (chosenColor) {
+                    root.model.backgroundColor = chosenColor;
+                }
 			}
 		}
 
@@ -87,6 +95,10 @@ Rectangle {
 			sourceComponent: ColorPicker{
 				paletteModel: root.model.paletteModel
 				cellColor: root.model.accentColor
+
+                onColorChanged: function (chosenColor) {
+                    root.model.accentColor = chosenColor;
+                }
 			}
 		}
 

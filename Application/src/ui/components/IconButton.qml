@@ -24,7 +24,6 @@ MaskedImage {
 
 		hoverEnabled: true
 		onClicked: {
-			console.log('DEBUG')
 			root.clicked();
 		}
 		onReleased: function() {

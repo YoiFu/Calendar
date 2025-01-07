@@ -14,6 +14,8 @@ Item {
 	height: internal.outerRadius
 	width: internal.outerRadius
 
+    signal colorChanged(var chosenColor)
+
 	onOpenPopupChanged: function() {
 		if (openPopup) {
 			colorPickerLoader.open();
@@ -73,6 +75,9 @@ Item {
 
 		paletteModel: root.paletteModel
 		targetColor: root.cellColor
+        onColorChanged: function (chosenColor) {
+            root.colorChanged(chosenColor)
+        }
 	}
 
 	QtObject {

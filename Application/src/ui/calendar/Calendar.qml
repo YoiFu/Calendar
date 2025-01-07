@@ -29,7 +29,7 @@ Item {
 
 			radius: internal.radius
 
-			color: CPalette.layer4
+            color: root.settingsModel.backgroundColor
 			opacity: settingsModel.transparency / 100
             visible: !backgroundContainer.enabledCustomBackground
 		}
@@ -172,6 +172,7 @@ Item {
 				Layout.topMargin: 6
 
 				temporalObject: root.temporalObject
+                dayInWeekColor: root.settingsModel.textColor
 			}
 		}
 	}
