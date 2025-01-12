@@ -7,6 +7,13 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(Qt6 COMPONENTS Quick Core REQUIRED)
 
+include(CerealInstall)
+if(EXISTS "${CEREAL_INCLUDE_DIR}")
+    include_directories("${CEREAL_INCLUDE_DIR}")
+else()
+    message(FATAL_ERROR "Cereal include directory not found: ${CEREAL_INCLUDE_DIR}")
+endif()
+
 add_subdirectory(ui)
 add_subdirectory(core)
 add_subdirectory(model)
@@ -25,4 +32,3 @@ target_link_libraries(${PROJECT_NAME}
         core
         model
 )
-
